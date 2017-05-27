@@ -1,19 +1,23 @@
 package com.allinmyapp.news;
 
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
+import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+
+import com.allinmyapp.news.Model.NewsEntity;
+import com.allinmyapp.news.Model.NewsModel;
+import com.allinmyapp.news.UI.NewsFragment;
+import com.allinmyapp.news.UI.NewsMap;
+
+import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NewsFragment.OnListFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -29,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private ArrayList<NewsMap> newsMap = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,22 +44,18 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mNewsPagerAdapter = new NewsPagerAdapter(getSupportFragmentManager());
+        newsMap.add(new NewsMap("General",NewsFragment.newInstance(NewsModel.TYPE.GENERAL)));
+        newsMap.add(new NewsMap("Sports",NewsFragment.newInstance(NewsModel.TYPE.GENERAL)));
+        newsMap.add(new NewsMap("Politics",NewsFragment.newInstance(NewsModel.TYPE.GENERAL)));
+        newsMap.add(new NewsMap("Tech",NewsFragment.newInstance(NewsModel.TYPE.GENERAL)));
+        mNewsPagerAdapter = new NewsPagerAdapter(getSupportFragmentManager(),newsMap);
+
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         mViewPager.setAdapter(mNewsPagerAdapter);
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
+        tabLayout.setupWithViewPager(mViewPager);
     }
 
 
@@ -78,5 +79,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onListFragmentInteraction(NewsEntity item) {
+
     }
 }

@@ -1,16 +1,22 @@
 package com.allinmyapp.news.UI;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.allinmyapp.news.Model.NewsEntity;
 import com.allinmyapp.news.R;
 import com.allinmyapp.news.UI.NewsFragment.OnListFragmentInteractionListener;
 import com.allinmyapp.news.UI.dummy.DummyContent.DummyItem;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import static android.text.Html.FROM_HTML_OPTION_USE_CSS_COLORS;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
@@ -19,10 +25,10 @@ import java.util.List;
  */
 public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<NewsEntity> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public NewsRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public NewsRecyclerViewAdapter(List<NewsEntity> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -37,8 +43,12 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mTitle.setText(mValues.get(position).getTitle());
+        holder.mContentView.setText(Html.fromHtml(mValues.get(position).getContent()));
+        Picasso.with(holder.mView.getContext())
+                .load(mValues.get(position).getImageUrl())
+                .into(holder.mImageView);
+
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,14 +69,16 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
+        public final TextView mTitle;
         public final TextView mContentView;
-        public DummyItem mItem;
+        private final ImageView mImageView;
+        public NewsEntity mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
+            mTitle = (TextView) view.findViewById(R.id.news);
+            mImageView = (ImageView) view.findViewById(R.id.image_icon);
             mContentView = (TextView) view.findViewById(R.id.content);
         }
 

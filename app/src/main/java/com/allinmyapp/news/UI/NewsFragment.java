@@ -3,16 +3,19 @@ package com.allinmyapp.news.UI;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.allinmyapp.news.Model.NewsEntity;
+import com.allinmyapp.news.Model.NewsModel;
 import com.allinmyapp.news.R;
-import com.allinmyapp.news.UI.dummy.DummyContent;
-import com.allinmyapp.news.UI.dummy.DummyContent.DummyItem;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * A fragment representing a list of Items.
@@ -22,21 +25,14 @@ import com.allinmyapp.news.UI.dummy.DummyContent.DummyItem;
  */
 public class NewsFragment extends Fragment {
 
-    public enum TYPE{
-        GENERAL,
-        POLITICS,
-        SPORTS,
-        TECH,
-        ENTERTAINMENT,
-        SCIENCE,
-        FINANCE,
-    }
-
     // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
+    private static final String NEWS_TYPE = "news-type";
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
+    private List<NewsEntity> newsEntities = new ArrayList<>();
+    private String mNewsType;
+    private NewsRecyclerViewAdapter adapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -47,10 +43,10 @@ public class NewsFragment extends Fragment {
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static NewsFragment newInstance(int columnCount) {
+    public static NewsFragment newInstance(NewsModel.TYPE columnCount) {
         NewsFragment fragment = new NewsFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
+        args.putString(NEWS_TYPE, columnCount.toString());
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,10 +54,7 @@ public class NewsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
+        mNewsType = getArguments().getString(NEWS_TYPE);
     }
 
     @Override
@@ -69,20 +62,26 @@ public class NewsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_item_list, container, false);
 
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
+
+        Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new NewsRecyclerViewAdapter(DummyContent.ITEMS, mListener));
-        }
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        adapter = new NewsRecyclerViewAdapter(newsEntities, mListener);
+        recyclerView.setAdapter(adapter);
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        NewsModel.getInstance(Locale.ENGLISH).getNews(getContext(),NewsModel.TYPE.GENERAL, new NewsModel.Callback() {
+            @Override
+            public void response(List<NewsEntity> newsEntityList) {
+                newsEntities = newsEntityList;
+                adapter.notifyDataSetChanged();
+            }
+        });
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -113,6 +112,6 @@ public class NewsFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(NewsEntity item);
     }
 }

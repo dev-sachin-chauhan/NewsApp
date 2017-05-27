@@ -5,6 +5,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.allinmyapp.news.UI.NewsFragment;
+import com.allinmyapp.news.UI.NewsMap;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Sachin on 01/05/17.
@@ -17,34 +22,27 @@ import com.allinmyapp.news.UI.NewsFragment;
  */
 public class NewsPagerAdapter extends FragmentPagerAdapter {
 
-    public NewsPagerAdapter(FragmentManager fm) {
+    ArrayList<NewsMap> newsMap;
+
+    public NewsPagerAdapter(FragmentManager fm, ArrayList<NewsMap> map) {
         super(fm);
+        this.newsMap = map;
     }
 
     @Override
     public Fragment getItem(int position) {
-        // getItem is called to instantiate the fragment for the given page.
-        // Return a PlaceholderFragment (defined as a static inner class below).
-        return NewsFragment.newInstance(position + 1);
+        return newsMap.get(position).fragment;
     }
 
     @Override
     public int getCount() {
-        // Show 3 total pages.
-        return 3;
+        return newsMap.size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        switch (position) {
-            case 0:
-                return "SECTION 1";
-            case 1:
-                return "SECTION 2";
-            case 2:
-                return "SECTION 3";
-        }
-        return null;
+        return newsMap.get(position).title;
+
     }
 }
 
