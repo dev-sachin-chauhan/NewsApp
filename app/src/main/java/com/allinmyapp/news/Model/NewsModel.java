@@ -13,18 +13,6 @@ import java.util.Map;
 
 public class NewsModel implements NewsModelInterface{
     private final Locale locale;
-    private Map<TYPE,String> typeMap;
-
-
-    public enum TYPE{
-        GENERAL,
-        POLITICS,
-        SPORTS,
-        TECH,
-        ENTERTAINMENT,
-        SCIENCE,
-        FINANCE,
-    }
 
     public interface Callback {
         void response(List<NewsEntity> newsEntityListsList);
@@ -39,9 +27,9 @@ public class NewsModel implements NewsModelInterface{
     }
 
     @Override
-    public void getNews(Context context, TYPE newsType, final Callback callback) {
+    public void getNews(Context context, String newsType, final Callback callback) {
         final Handler handler = new Handler();
-        new NetworkCall(context, new URLBuilder().build() , new NetworkCall.Callback() {
+        new NetworkCall(context, new URLBuilder().setTopic(newsType).build() , new NetworkCall.Callback() {
 
             @Override
             public void onResponse(final List<NewsEntity> newsEntities) {

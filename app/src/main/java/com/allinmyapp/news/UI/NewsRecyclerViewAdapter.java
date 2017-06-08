@@ -44,7 +44,7 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mTitle.setText(mValues.get(position).getTitle());
-        holder.mContentView.setText(Html.fromHtml(mValues.get(position).getContent()));
+//        holder.mContentView.setText(Html.fromHtml(mValues.get(position).getContent()));
         Picasso.with(holder.mView.getContext())
                 .load(mValues.get(position).getImageUrl())
                 .into(holder.mImageView);

@@ -8,5 +8,5 @@ import android.content.Context;
 
 public interface NewsModelInterface {
 
-    void getNews(Context context, NewsModel.TYPE newsType, NewsModel.Callback callback);
+    void getNews(Context context, String newsType, NewsModel.Callback callback);
 }

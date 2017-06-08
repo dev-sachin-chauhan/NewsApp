@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.allinmyapp.news.Model.Constants;
 import com.allinmyapp.news.Model.NewsEntity;
 import com.allinmyapp.news.Model.NewsModel;
 import com.allinmyapp.news.UI.NewsFragment;
@@ -44,11 +45,17 @@ public class MainActivity extends AppCompatActivity implements NewsFragment.OnLi
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        newsMap.add(new NewsMap("General",NewsFragment.newInstance(NewsModel.TYPE.GENERAL)));
-        newsMap.add(new NewsMap("Sports",NewsFragment.newInstance(NewsModel.TYPE.GENERAL)));
-        newsMap.add(new NewsMap("Politics",NewsFragment.newInstance(NewsModel.TYPE.GENERAL)));
-        newsMap.add(new NewsMap("Tech",NewsFragment.newInstance(NewsModel.TYPE.GENERAL)));
-        mNewsPagerAdapter = new NewsPagerAdapter(getSupportFragmentManager(),newsMap);
+        newsMap.add(new NewsMap("Top Headlines",NewsFragment.newInstance(Constants.TOP_HEADLINE)));
+        newsMap.add(new NewsMap("Sports",NewsFragment.newInstance(Constants.SPORTS)));
+        newsMap.add(new NewsMap("Politics",NewsFragment.newInstance(Constants.POLOTICS)));
+        newsMap.add(new NewsMap("Nation",NewsFragment.newInstance(Constants.NATION)));
+        newsMap.add(new NewsMap("Health",NewsFragment.newInstance(Constants.HEALTH)));
+        newsMap.add(new NewsMap("Elections",NewsFragment.newInstance(Constants.ELECTIONS)));
+        newsMap.add(new NewsMap("Entertainment",NewsFragment.newInstance(Constants.ENTERTAINMENT)));
+        newsMap.add(new NewsMap("World",NewsFragment.newInstance(Constants.WORLD_TOPICS)));
+        newsMap.add(new NewsMap("Business",NewsFragment.newInstance(Constants.BUSINESS)));
+        newsMap.add(new NewsMap("Technology",NewsFragment.newInstance(Constants.TECHNOLOGY)));
+        mNewsPagerAdapter = new NewsPagerAdapter(getSupportFragmentManager(), newsMap);
 
 
         // Set up the ViewPager with the sections adapter.
@@ -56,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements NewsFragment.OnLi
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         mViewPager.setAdapter(mNewsPagerAdapter);
         tabLayout.setupWithViewPager(mViewPager);
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
     }
 
 
