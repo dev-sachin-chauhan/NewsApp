@@ -70,15 +70,17 @@ class NetworkCall {
 
     /**
      * Ref: http://www.androidauthority.com/simple-rss-reader-full-tutorial-733245/
+     *
      * @param response
      * @return
      */
     private List<NewsEntity> parseXmlResponse(String response) {
         List<NewsEntity> list = new ArrayList<>();
 
-        String title = "title";
-        String link = "link";
-        String description = "description";
+        String title = null;
+        String link = null;
+        String description = null;
+        String pubDate = null;
         boolean isItem = false;
 
         try {
@@ -91,18 +93,18 @@ class NetworkCall {
                 int eventType = xmlPullParser.getEventType();
 
                 String name = xmlPullParser.getName();
-                if(name == null)
+                if (name == null)
                     continue;
 
-                if(eventType == XmlPullParser.END_TAG) {
-                    if(name.equalsIgnoreCase("item")) {
+                if (eventType == XmlPullParser.END_TAG) {
+                    if (name.equalsIgnoreCase("item")) {
                         isItem = false;
                     }
                     continue;
                 }
 
                 if (eventType == XmlPullParser.START_TAG) {
-                    if(name.equalsIgnoreCase("item")) {
+                    if (name.equalsIgnoreCase("item")) {
                         isItem = true;
                         continue;
                     }
@@ -121,21 +123,24 @@ class NetworkCall {
                     link = result;
                 } else if (name.equalsIgnoreCase("description")) {
                     description = result;
+                } else if (name.equalsIgnoreCase("pubDate")) {
+                    pubDate = result;
                 }
 
-                if (title != null && link != null && description != null) {
-                    if(isItem) {
+                if (title != null && link != null && description != null && pubDate != null) {
+                    if (isItem) {
                         int index = description.indexOf("img src=");
                         String subString = description.substring(index + 11);
                         int index2 = subString.indexOf("\"");
-                        String imgLink = subString.substring(0,index2);
-                        Log.i("Img Link",imgLink);
-                        NewsEntity item = new NewsEntity(title, "http://" + imgLink, description);
+                        String imgLink = subString.substring(0, index2);
+                        Log.i("Img Link", imgLink);
+                        NewsEntity item = new NewsEntity(title, "http://" + imgLink, pubDate);
                         list.add(item);
                     }
 
                     title = null;
                     link = null;
+                    pubDate = null;
                     description = null;
                     isItem = false;
                 }

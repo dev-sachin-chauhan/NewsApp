@@ -1,7 +1,6 @@
 package com.allinmyapp.news.UI;
 
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +14,6 @@ import com.allinmyapp.news.UI.dummy.DummyContent.DummyItem;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-
-import static android.text.Html.FROM_HTML_OPTION_USE_CSS_COLORS;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
@@ -44,7 +41,7 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mTitle.setText(mValues.get(position).getTitle());
-//        holder.mContentView.setText(Html.fromHtml(mValues.get(position).getContent()));
+        holder.mPubDate.setText(mValues.get(position).getPubDate());
         Picasso.with(holder.mView.getContext())
                 .load(mValues.get(position).getImageUrl())
                 .into(holder.mImageView);
@@ -70,7 +67,7 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mTitle;
-        public final TextView mContentView;
+        public final TextView mPubDate;
         private final ImageView mImageView;
         public NewsEntity mItem;
 
@@ -79,12 +76,12 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
             mView = view;
             mTitle = (TextView) view.findViewById(R.id.news);
             mImageView = (ImageView) view.findViewById(R.id.image_icon);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mPubDate = (TextView) view.findViewById(R.id.pubDate);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mPubDate.getText() + "'";
         }
     }
 }

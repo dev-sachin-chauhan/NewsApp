@@ -9,10 +9,20 @@ public class NewsEntity {
     private String imageUrl;
     private String title;
 
-    public NewsEntity(String title, String link, String description) {
+    public String getPubDate() {
+        return pubDate;
+    }
+
+    public void setPubDate(String pubDate) {
+        this.pubDate = pubDate;
+    }
+
+    private String pubDate;
+
+    public NewsEntity(String title, String link, String pubDate) {
         setTitle(title);
         setImageUrl(link);
-        setContent(description);
+        setPubDate(pubDate);
     }
 
     public String getTitle() {
