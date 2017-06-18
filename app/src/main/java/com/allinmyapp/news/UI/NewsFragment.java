@@ -76,7 +76,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         recyclerView.setAdapter(adapter);
 
         mProgressDialog = new ProgressDialog(getContext());
-        mProgressDialog.setMessage(getString(R.string.Loading));
+        mProgressDialog.setMessage(getString(R.string.loading_text));
         mProgressDialog.setCanceledOnTouchOutside(false);
         return view;
     }
