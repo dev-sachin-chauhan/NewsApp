@@ -5,9 +5,15 @@ package com.allinmyapp.news.Model;
  */
 
 public class NewsEntity {
-    private String content;
-    private String imageUrl;
-    private String title;
+    private String content = "";
+    private String imageUrl = null;
+    private String title = "";
+
+    public void setSrcUrl(String srcUrl) {
+        this.srcUrl = srcUrl;
+    }
+
+    private String srcUrl = "";
 
     public String getPubDate() {
         return pubDate;
@@ -17,11 +23,16 @@ public class NewsEntity {
         this.pubDate = pubDate;
     }
 
-    private String pubDate;
+    private String pubDate = "";
 
-    public NewsEntity(String title, String link, String pubDate) {
+    public NewsEntity(){
+
+    }
+
+    public NewsEntity(String title, String imglink, String srcLink ,String pubDate) {
         setTitle(title);
-        setImageUrl(link);
+        setImageUrl(imglink);
+        setSrcUrl(srcLink);
         setPubDate(pubDate);
     }
 
@@ -49,4 +60,7 @@ public class NewsEntity {
         this.imageUrl = imageUrl;
     }
 
+    public String getSrcUrl() {
+        return srcUrl;
+    }
 }

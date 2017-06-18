@@ -42,9 +42,11 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
         holder.mItem = mValues.get(position);
         holder.mTitle.setText(mValues.get(position).getTitle());
         holder.mPubDate.setText(mValues.get(position).getPubDate());
-        Picasso.with(holder.mView.getContext())
-                .load(mValues.get(position).getImageUrl())
-                .into(holder.mImageView);
+        if(mValues.get(position).getImageUrl() != null) {
+            Picasso.with(holder.mView.getContext())
+                    .load(mValues.get(position).getImageUrl())
+                    .into(holder.mImageView);
+        }
 
 
         holder.mView.setOnClickListener(new View.OnClickListener() {

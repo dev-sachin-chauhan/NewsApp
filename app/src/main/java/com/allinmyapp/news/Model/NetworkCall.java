@@ -134,7 +134,7 @@ class NetworkCall {
                         int index2 = subString.indexOf("\"");
                         String imgLink = subString.substring(0, index2);
                         Log.i("Img Link", imgLink);
-                        NewsEntity item = new NewsEntity(title, "http://" + imgLink, pubDate);
+                        NewsEntity item = new NewsEntity(title, "http://" + imgLink, link, pubDate);
                         list.add(item);
                     }
 

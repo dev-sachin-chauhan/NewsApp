@@ -77,6 +77,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         mProgressDialog = new ProgressDialog(getContext());
         mProgressDialog.setMessage(getString(R.string.Loading));
+        mProgressDialog.setCanceledOnTouchOutside(false);
         return view;
     }
 
@@ -95,7 +96,14 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             @Override
             public void response(List<NewsEntity> newsEntityList) {
                 newsEntities.clear();
-                newsEntities.addAll(newsEntityList);
+                if(newsEntityList == null) {
+                    NewsEntity newsEntity = new NewsEntity();
+                    newsEntity.setTitle(getString(R.string.networkerror));
+                    newsEntities.add(newsEntity);
+
+                }else {
+                    newsEntities.addAll(newsEntityList);
+                }
                 adapter.notifyDataSetChanged();
                 mProgressDialog.dismiss();
                 mSwipeContainer.setRefreshing(false);
