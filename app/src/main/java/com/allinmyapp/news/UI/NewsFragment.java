@@ -37,6 +37,8 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private NewsRecyclerViewAdapter adapter;
     private ProgressDialog mProgressDialog;
     private SwipeRefreshLayout mSwipeContainer;
+    private boolean mIsVisible = false;
+    private boolean mRequestUnderProgess = false;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -72,7 +74,6 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        adapter = new NewsRecyclerViewAdapter(newsEntities, mListener);
         recyclerView.setAdapter(adapter);
 
         mProgressDialog = new ProgressDialog(getContext());
@@ -90,8 +91,20 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         fetchData();
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        mIsVisible = isVisibleToUser;
+        if (mRequestUnderProgess) {
+            mProgressDialog.show();
+        }
+    }
+
     private void fetchData() {
-        mProgressDialog.show();
+        if(mIsVisible) {
+            mProgressDialog.show();
+        }
+        mRequestUnderProgess = true;
         NewsModel.getInstance(Locale.ENGLISH).getNews(getContext(), mNewsType, new NewsModel.Callback() {
             @Override
             public void response(List<NewsEntity> newsEntityList) {
@@ -104,6 +117,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 }else {
                     newsEntities.addAll(newsEntityList);
                 }
+                mRequestUnderProgess = false;
                 adapter.notifyDataSetChanged();
                 mProgressDialog.dismiss();
                 mSwipeContainer.setRefreshing(false);
@@ -122,11 +136,13 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
         }
+        adapter = new NewsRecyclerViewAdapter(newsEntities, mListener);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+        adapter = null;
         mListener = null;
     }
 
