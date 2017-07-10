@@ -105,7 +105,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             mProgressDialog.show();
         }
         mRequestUnderProgess = true;
-        NewsModel.getInstance(Locale.ENGLISH).getNews(getContext(), mNewsType, new NewsModel.Callback() {
+        NewsModel.getInstance().getNews(getContext(), mNewsType, new NewsModel.Callback() {
             @Override
             public void response(List<NewsEntity> newsEntityList) {
                 newsEntities.clear();

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Helper class for providing sample content for user interfaces created by
+ * Helper class for providing sample country for user interfaces created by
  * Android template wizards.
  * <p>
  * TODO: Replace all uses of this class before publishing your app.
@@ -45,13 +45,13 @@ public class DummyContent {
         StringBuilder builder = new StringBuilder();
         builder.append("Details about Item: ").append(position);
         for (int i = 0; i < position; i++) {
-            builder.append("\nMore details information here.");
+            builder.append("\nMore locale information here.");
         }
         return builder.toString();
     }
 
     /**
-     * A dummy item representing a piece of content.
+     * A dummy item representing a piece of country.
      */
     public static class DummyItem {
         public final String id;

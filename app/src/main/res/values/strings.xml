@@ -1,9 +1,85 @@
 <resources>
     <string name="app_name">News</string>
-    <string name="action_settings">Settings</string>
+    <string name="locale_settings">Select Locale</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title">Quick News Update</string>
     <string name="networkerror">Network Error</string>
     <string name="ok">Ok</string>
     <string name="loading_text">Loading...</string>
+
+    <string-array name="country_codes">
+        <item>au,Australia</item>
+        <item>us,U.S.</item>
+        <item>ar_me,Arabic</item>
+        <item>es_ar,Argentina</item>
+        <item>de_at,Austria</item>
+        <item>bn_bd,Bangladesh</item>
+        <item>nl_be,Belgium</item>
+        <item>en_bw,Botswana</item>
+        <item>pt-BR_br,Brazil</item>
+        <item>bg_bg,Bulgaria</item>
+        <item>ca,Canada</item>
+        <item>fr_ca,Canada</item>
+        <item>es_cl,Chile</item>
+        <item>cn,China</item>
+        <item>es_co,Colombia</item>
+        <item>es_cu,Cuba</item>
+        <item>cs_cz,Czech</item>
+        <item>ar_eg,Egypt</item>
+        <item>en_et,Ethiopia</item>
+        <item>fr,France</item>
+        <item>de,Germany</item>
+        <item>en_gh,Ghana</item>
+        <item>el_gr,Greece</item>
+        <item>hk,Hong Kong</item>
+        <item>hu_hu,Hungary</item>
+        <item>in,India</item>
+        <item>id_id,Indonesia</item>
+        <item>en_ie,Ireland</item>
+        <item>en_il,Israel</item>
+        <item>it,Italy</item>
+        <item>jp,Japan</item>
+        <item>en_ke,Kenya</item>
+        <item>kr,Korea</item>
+        <item>ar_sa,KSA</item>
+        <item>lv_lv,Latvia</item>
+        <item>ar_lb,Lebanon</item>
+        <item>lt_lt,Lithuania</item>
+        <item>en_my,Malaysia</item>
+        <item>es_mx,Mexico</item>
+        <item>fr_ma,Morroco</item>
+        <item>en_na,Namibia</item>
+        <item>nl_nl,Netherlands</item>
+        <item>nz,New Zealand</item>
+        <item>en_ng,Nigeria</item>
+        <item>no_no,Norway</item>
+        <item>en_pk,Pakistan</item>
+        <item>en_ph,Philippines</item>
+        <item>pl_pl,Poland</item>
+        <item>pt-PT_pt,Portugal</item>
+        <item>ro_ro,Romania</item>
+        <item>ru_ru,Russia</item>
+        <item>fr_sn,Senegal</item>
+        <item>sr_rs,Serbia</item>
+        <item>en_sg,Singapore</item>
+        <item>sk_sk,Slovakia</item>
+        <item>sl_si,Slovenia</item>
+        <item>en_za,South</item>
+        <item>es,Spain</item>
+        <item>sv_se,Sweden</item>
+        <item>de_ch,Switzerland</item>
+        <item>tw,Taiwan</item>
+        <item>en_tz,Tanzania</item>
+        <item>th_th,Thailand</item>
+        <item>tr_tr,Turkey</item>
+        <item>uk,U.K.</item>
+        <item>ar_ae,UAE</item>
+        <item>en_ug,Uganda</item>
+        <item>ru_ua,Ukraine</item>
+        <item>uk_ua,Ukraine</item>
+        <item>es_us,United</item>
+        <item>es_ve,Venezuela</item>
+        <item>vi_vn,Vietnam</item>
+        <item>en_zw,Zimbabwe</item>
+    </string-array>
 </resources>

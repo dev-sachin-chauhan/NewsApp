@@ -5,6 +5,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
 
+import com.allinmyapp.news.Util.Preference;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -14,18 +16,16 @@ import java.util.Map;
  */
 
 public class NewsModel implements NewsModelInterface{
-    private final Locale locale;
 
     public interface Callback {
         void response(List<NewsEntity> newsEntityListsList);
     }
 
-    public static NewsModelInterface getInstance(Locale locale) {
-        return new NewsModel(locale);
+    public static NewsModelInterface getInstance() {
+        return new NewsModel();
     }
 
-    private NewsModel(Locale locale) {
-        this.locale = locale;
+    private NewsModel() {
     }
 
     @Override
@@ -37,7 +37,9 @@ public class NewsModel implements NewsModelInterface{
         }
 
         final Handler handler = new Handler();
-        new NetworkCall(context, new URLBuilder().setTopic(newsType).build() , new NetworkCall.Callback() {
+        String locale = Preference.getInstance(context).getNewsLocale();
+
+        new NetworkCall(context, new URLBuilder().setTopic(newsType).setNewEditionLocale(locale).build() , new NetworkCall.Callback() {
 
             @Override
             public void onResponse(final List<NewsEntity> newsEntities) {

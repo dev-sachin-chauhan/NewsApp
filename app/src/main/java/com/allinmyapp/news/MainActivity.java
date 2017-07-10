@@ -22,13 +22,17 @@ import com.allinmyapp.news.Model.NewsEntity;
 import com.allinmyapp.news.Model.NewsModel;
 import com.allinmyapp.news.UI.NewsFragment;
 import com.allinmyapp.news.UI.NewsMap;
+import com.allinmyapp.news.Util.Preference;
 
 import java.util.ArrayList;
 
 import static com.allinmyapp.news.DetailNewsFragment.FragmentTAG;
 
 
-public class MainActivity extends AppCompatActivity implements NewsFragment.OnListFragmentInteractionListener , DetailNewsFragment.OnFragmentInteractionListener, TabLayout.OnTabSelectedListener{
+public class MainActivity extends AppCompatActivity implements NewsFragment.OnListFragmentInteractionListener,
+        DetailNewsFragment.OnFragmentInteractionListener,
+        TabLayout.OnTabSelectedListener,
+        LocaleFragment.OnListFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -102,12 +106,23 @@ public class MainActivity extends AppCompatActivity implements NewsFragment.OnLi
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
+        if (id == R.id.action_settings) {
+            launchLocaleFragment();
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void launchLocaleFragment() {
+        LocaleFragment localeFragment = LocaleFragment.newInstance();
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+        transaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left,
+                R.anim.slide_in_left, R.anim.slide_out_right);
+        transaction.replace(R.id.fragPage, localeFragment, FragmentTAG);
+        transaction.addToBackStack(FragmentTAG);
+        transaction.commit();
+        mFragmentManager.executePendingTransactions();
     }
 
     @Override
@@ -125,18 +140,21 @@ public class MainActivity extends AppCompatActivity implements NewsFragment.OnLi
     @Override
     public void onBackPress() {
         super.onBackPressed();
+        mAppBar.setVisibility(View.VISIBLE);
         mAppBar.setExpanded(true);
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        mAppBar.setVisibility(View.VISIBLE);
         mAppBar.setExpanded(true);
     }
 
     @Override
     public void hideActionBar() {
         mAppBar.setExpanded(false);
+        mAppBar.setVisibility(View.GONE);
     }
 
     @Override
@@ -154,4 +172,14 @@ public class MainActivity extends AppCompatActivity implements NewsFragment.OnLi
 
     }
 
+    @Override
+    public void onListFragmentInteraction(String country, String locale) {
+        Preference.getInstance(getApplicationContext()).setNewsLocale(locale);
+        reloadActivity();
+    }
+
+    private void reloadActivity() {
+        finish();
+        startActivity(getIntent());
+    }
 }

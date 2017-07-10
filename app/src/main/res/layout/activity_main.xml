@@ -19,7 +19,8 @@
             android:layout_width="match_parent"
             app:theme="@style/ToolBarStyle"
             android:layout_height="?attr/actionBarSize"
-            app:layout_scrollFlags="scroll|enterAlways|snap">
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            app:popupTheme="@style/MainActionBar.Popup">
         </android.support.v7.widget.Toolbar>
 
         <android.support.design.widget.TabLayout

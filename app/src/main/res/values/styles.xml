@@ -24,4 +24,9 @@
         <item name="actionMenuTextColor">@android:color/white</item>
     </style>
 
+    <style name="MainActionBar.Popup" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:colorBackground">#d20a43</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
+
 </resources>

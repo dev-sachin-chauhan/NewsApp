@@ -26,6 +26,11 @@ class URLBuilder {
         return this;
     }
 
+    URLBuilder setNewEditionLocale(String locale) {
+        request.put(Constants.EDITION, locale);
+        return this;
+    }
+
     String build() {
         request.put(Constants.OUTPUT,Constants.RSS);
         StringBuilder url = new StringBuilder(Constants.BASE_LINK);
